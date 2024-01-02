@@ -1,0 +1,393 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--=============== FAVICON ===============-->
+    <link rel="shortcut icon" href="{% static 'assets/img/favicon.png' %}" type="image/x-icon">
+
+    <!--=============== BOXICONS ===============-->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    
+
+    <!--=============== SWIPER CSS ===============-->
+    <link rel="stylesheet" href="{% static 'assets/css/swiper-bundle.min.css' %}">
+
+    <!-- Add these CDN links in the head section -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    
+    
+    <!--=============== CSS ===============-->
+    <link rel="stylesheet" href="{% static 'assets/css/styles.css' %}">
+    
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+        <title>FYP Home</title>
+        <style>
+            .alert{
+                position: fixed;
+                top: 60px;
+                left: 25px;
+                width: 100%;
+                z-index: 1000;
+            }
+        </style>
+</head>
+<body>
+    <header class="header" id="header">
+        <nav class="nav container">
+            <a href="#" class="nav__logo">
+                FYP home <i class='bx bx-home' ></i>
+            </a>
+            <div class="nav__menu">
+                <ul class="nav__list">
+                    <li class="nav__item">
+                        <a href="#" class="nav__link active-link">
+                            <i class='bx bx-home-alt-2' ></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+
+                    <li class="nav__item">
+                        {% comment %} <a href="{% url 'core:residence' %}" class="nav__link {% if active_page == 'residence' %}active-link{% endif %}"> {% endcomment %}
+                     <a href="{% url 'core:residence' %}" class="nav__link">
+                            <i class='bx bx-award'></i>
+                            <span>Residences</span>
+                        </a>
+                    </li>
+
+                    <li class="nav__item">
+                        <a href="#" class="nav__link">
+                            <i class='bx bx-building-house' ></i>
+                            <span>My Listing</span>
+                        </a>
+                    </li>
+                   
+                    <li class="nav__item">
+                        <a href="#" class="nav__link">
+                            <i class='bx bx-user-circle'></i>
+                            <span>Profile</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!--theme change button  -->
+            <i class='bx bx-moon change-theme' id="theme-button"></i>
+        </nav>
+</header>
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            <strong>{{ message }}</strong>
+        </div>
+    {% endfor %}
+    <script>
+        $(document).ready(function(){
+            setTimeout(function(){
+                $('.alert').fadeOut('slow');
+            }, 3000); // 3000 milliseconds = 3 seconds
+        });
+    </script>
+{% endif %}
+
+
+<!--==================== POPULAR ====================-->
+<section class="popular section" id="popular">
+    <div class="container">
+        <div class="sticky-container">
+            {% comment %} <span class="section__subtitle">Best choice</span> {% endcomment %}
+            <h2 class="section__title">
+                Residences <span>.</span>
+            </h2>
+            <div id="menu-container" class="hidden">
+                <div id="menu-icon" onclick="toggleMenuIcons()">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+                <div id="close-btn" onclick="toggleMenuIcons()">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+              <div id="menu">
+              <div class="wrapper">
+
+                <header>
+                    <p><i class='bx bx-filter-alt'></i> Filter-Section </p>
+                    <h2><ins>Price Range:</ins></h2>
+                </header>
+              <div class="price-input">
+                <div class="field">
+                  <span>Min</span>
+                  <input type="number" class="input-min" value="2500">
+                </div>
+                <div class="separator">-</div>
+                <div class="field">
+                  <span>Max</span>
+                  <input type="number" class="input-max" value="7500">
+                </div>
+              </div>
+              <div class="slider">
+                <div id="priceSlider"></div>
+              </div>
+              <div class="range-input">
+                <input type="range" class="range-min" min="0" max="10000" value="2500" step="100">
+                <input type="range" class="range-max" min="0" max="10000" value="7500" step="100">
+              </div>
+              <header>
+                <h2><ins>Category:</ins></h2>
+              </header>
+              <div class="customee-checkbox">
+                {% for c in categories %}
+                <div>
+                    <input data-filter="Category" class="form-check-input filter-checkbox" type="checkbox" name="checkbox" id="category{{ c.id }}" value="{{ c.id }}" />
+                    <label class="form-check-label" for="category{{ c.id }}"><span>{{ c.title }}</span> <span>({{ c.category.count }})</span></label>              
+                </div>
+                {% endfor %}
+              </div>
+             
+            </div>
+    
+              </div>
+        </div>
+    <div class="residence__cont">
+        {% for Residence in Residences %}
+        <div class="residence__container">  
+                <article class="residence__card">
+                    <a href="{% url 'core:residence_detail' Residence.Rid %}">
+                        <img src="{{ Residence.image.url }}" alt="" class="residence__img">
+                    </a>
+                    <div class="residence__data">
+                        <h3 class="residence__title">
+                            {{Residence.title}}
+                        </h3>
+                        <h2 class="residence__price">
+                            <span1>₹</span1>{{Residence.price}} <span2>/m</span2> 
+                        </h2>
+                        <span class="old_price">
+                            <del><span1>₹</span1> {{Residence.old_price}} </del><span class="discount">({{Residence.get_precentage|floatformat:0}}% OFF)</span>
+                        </span>
+                        <span class="old_price">{{Residence.type}} </span>
+                        <p class="residence__description">
+                            {{Residence.address|truncatechars:30}}
+                        </p>
+                    </div> 
+                </article> 
+        </div>
+        {% endfor %}    
+    </div>
+</div>
+</section>
+
+
+
+<script>
+
+
+
+//   ===========================================PRICE FILTER=========================================
+const rangeInput = document.querySelectorAll(".range-input input"),
+priceInput = document.querySelectorAll(".price-input input"),
+range = document.querySelector(".slider .progress");
+let priceGap = 1000;
+
+priceInput.forEach(input =>{
+    input.addEventListener("input", e =>{
+        let minPrice = parseInt(priceInput[0].value),
+        maxPrice = parseInt(priceInput[1].value);
+        
+        if((maxPrice - minPrice >= priceGap) && maxPrice <= rangeInput[1].max){
+            if(e.target.className === "input-min"){
+                rangeInput[0].value = minPrice;
+                range.style.left = ((minPrice / rangeInput[0].max) * 100) + "%";
+            }else{
+                rangeInput[1].value = maxPrice;
+                range.style.right = 100 - (maxPrice / rangeInput[1].max) * 100 + "%";
+            }
+        }
+    });
+});
+
+rangeInput.forEach(input =>{
+    input.addEventListener("input", e =>{
+        let minVal = parseInt(rangeInput[0].value),
+        maxVal = parseInt(rangeInput[1].value);
+
+        if((maxVal - minVal) < priceGap){
+            if(e.target.className === "range-min"){
+                rangeInput[0].value = maxVal - priceGap
+            }else{
+                rangeInput[1].value = minVal + priceGap;
+            }
+        }else{
+            priceInput[0].value = minVal;
+            priceInput[1].value = maxVal;
+            range.style.left = ((minVal / rangeInput[0].max) * 100) + "%";
+            range.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
+        }
+    });
+});
+//   ===========================================MENU=========================================
+function toggleMenuIcons() {
+    var menuIcon = document.getElementById("menu-icon");
+    var closeBtn = document.getElementById("close-btn");
+    var menu = document.getElementById("menu");
+
+    menuIcon.classList.toggle("active");
+    closeBtn.classList.toggle("active");
+
+    if (menuIcon.classList.contains("active")) {
+        menu.style.width = "20rem";
+    } else {
+        menu.style.width = "0";
+    }
+}
+
+
+
+//   ===========================================MENU=========================================
+    document.addEventListener('DOMContentLoaded', function () {
+      function toggleMenuVisibility() {
+        const menuContainer = document.getElementById('menu-container');
+        const stickyContainer = document.querySelector('.sticky-container');
+      
+        // Adjust this value based on when you want the menu to appear (3rem in this case)
+        const triggerPosition = 5 * parseFloat(getComputedStyle(document.documentElement).fontSize);
+      
+        if (window.scrollY >= triggerPosition) {
+          menuContainer.classList.remove('hidden');
+        } else {
+          menuContainer.classList.add('hidden');
+        }
+      }
+      
+      window.addEventListener('scroll', toggleMenuVisibility);
+    });
+
+
+
+
+    </script>
+
+
+    <footer class="footer section">
+        <div class="footer__container container grid">
+            <div>
+                <a href="" class="footer__logo">
+                    FYP home <i class='bx bx-home' ></i>
+                </a>
+                <p class="footer description">
+                    our vision is to make all student<br>
+                    the best place to live
+                </p>
+            </div>
+    
+            <div class="footer__content">
+                <!-- 1 -->
+                <div>
+                    <h3 class="footer__title">
+                        About
+                    </h3>
+    
+                    <ul class="footer__links">
+                        <li>
+                            <a href="" class="footer_link">About Us</a>
+                        </li>
+                        <li>
+                            <a href="" class="footer_link">Features</a>
+                        </li>
+                        <li>
+                            <a href="" class="footer_link">News & Blogs</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- 2 -->
+                <div>
+                    <h3 class="footer__title">
+                        Company
+                    </h3>
+    
+                    <ul class="footer__links">
+                        <li>
+                            <a href="" class="footer_link">How we work?</a>
+                        </li>
+                        <li>
+                            <a href="" class="footer_link">Capital</a>
+                        </li>
+                        <li>
+                            <a href="" class="footer_link">Security</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- 3 -->
+                <div>
+                    <h3 class="footer__title">
+                        Support
+                    </h3>
+    
+                    <ul class="footer__links">
+                        <li>
+                            <a href="" class="footer_link">FAQs</a>
+                        </li>
+                        <li>
+                            <a href="" class="footer_link">Support center</a>
+                        </li>
+                        <li>
+                            <a href="" class="footer_link">Contact Us</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- 4 -->
+                <div>
+                    <h3 class="footer__title">
+                        Follow Us
+                    </h3>
+    
+                    <ul class="footer__social">
+                        <a href="" class="footer__social-link">
+                           <i class='bx bxl-facebook-circle'></i>
+                        </a>
+                        <a href="" class="footer__social-link">
+                            <i class='bx bxl-instagram-alt'></i>
+                        </a>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer__info container">
+            <span class="footer__copy">
+                &#169; FYP Home. All right reserved
+            </span>
+    
+            <div class="footer__privacy">
+                <a href="">Terms & Agreement</a>
+                <a href="">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+    
+    
+    <!--========== SCROLL UP ==========-->
+     <a href="#" class="scrollup" id="scroll-up">
+        <i class='bx bx-chevrons-up'></i>
+     </a>
+     <!--=============== SCROLLREVEAL ===============-->
+     <script src="{% static 'assets/js/scrollreveal.min.js' %}"></script>
+     
+     <!--=============== SWIPER JS ===============-->
+     <script src="{% static 'assets/js/swiper-bundle.min.js' %}"></script>
+     
+     <!--=============== MAIN JS ===============-->
+     <script src="{% static 'assets/js/main.js' %}"></script>
+     <script src="{% static 'assets/js/function.js' %}"></script>
+    
+    </body>
+    </html>

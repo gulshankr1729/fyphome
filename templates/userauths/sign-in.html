@@ -1,0 +1,56 @@
+{% extends "partials/base.html" %}
+{% load static %}
+{% block main %}    
+<section class="value section" id="value">
+    <div class="value__container container grid">
+        <div class="value__images">
+            <div class="value__orbe"></div>
+
+                <div class="value__img">
+                    <img src={% static "assets/img/value.jpg" %} alt="">
+                </div>
+            </div> 
+            <div class="value__content">
+                <div class="value__data">
+                    <h2 class="section__title">
+                        Sign-In
+                    </h2>
+                    <a class="section__subtitle" href="{% url 'userauths:sign-up' %}" >Don't have an account?</a>
+                </div><br>
+                <form method="POST"> 
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <input type="text" required name="email" placeholder="Email *" />
+                    </div>
+                    <div class="form-group">
+                        <input required type="password" name="password" placeholder="Your password *" />
+                    </div>
+                    <!-- <div class="login_footer form-group">
+                        <div class="chek-form">
+                            <input type="text" required="" name="email" placeholder="Security code *" />
+                        </div>
+                        <span class="security-code">
+                            <b class="text-new">8</b>
+                            <b class="text-hot">6</b>
+                            <b class="text-sale">7</b>
+                            <b class="text-best">5</b>
+                        </span>
+                    </div> -->
+                    <div class="login_footer form-group mb-50">
+                        <div class="chek-form">
+                            <div class="custome-checkbox">
+                                <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox1" value="" />
+                                <label class="form-check-label" for="exampleCheckbox1"><span>Remember me</span></label>
+                            </div>
+                        </div>
+                        <a class="text-muted" href="#">Forgot password?</a>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="button register__button" name="login">Log in</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+</section>
+{% endblock main %}

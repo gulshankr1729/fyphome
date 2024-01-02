@@ -8,18 +8,10 @@ class UserRegisterForm(UserCreationForm):
     email = forms.EmailField(widget=forms.EmailInput(attrs={"placeholder":"Email"}))
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={"placeholder":"Password"}))
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={"placeholder":"Confirm Password"}))
-
+    error_messages = {
+        'password_mismatch': "The passwords do not match.",
+        'unique_email': "An account with this email already exists.",
+    }
     class Meta:
         model = User
         fields = ['username', 'email']
-
-
-
-# class ProfileForm(forms.ModelForm):
-#     full_name = forms.CharField(widget=forms.TextInput(attrs={"placeholder":"Full Name"}))
-#     bio = forms.CharField(widget=forms.TextInput(attrs={"placeholder":"Bio"}))
-#     phone = forms.CharField(widget=forms.TextInput(attrs={"placeholder":"Phone"}))
-
-#     class Meta:
-#         model = Profile
-#         fields = ['full_name', 'image', 'bio', 'phone']

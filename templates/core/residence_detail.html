@@ -1,0 +1,390 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--=============== FAVICON ===============-->
+    <link rel="shortcut icon" href="{% static 'assets/img/favicon.png' %}" type="image/x-icon">
+
+    <!--=============== BOXICONS ===============-->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    
+
+    <!--=============== SWIPER CSS ===============-->
+    <link rel="stylesheet" href="{% static 'assets/css/swiper-bundle.min.css' %}">
+
+    <!--=============== CSS ===============-->
+    <link rel="stylesheet" href="{% static 'assets/css/styles.css' %}">
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+
+
+        <title>FYP Home</title>
+        <style>
+            .alert{
+                position: fixed;
+                top: 60px;
+                left: 25px;
+                width: 100%;
+                z-index: 1000;
+            }
+        </style>
+</head>
+<body>
+    <header class="header" id="header">
+        <nav class="nav container">
+            <a href="#" class="nav__logo">
+                FYP home <i class='bx bx-home' ></i>
+            </a>
+            <div class="nav__menu">
+                <ul class="nav__list">
+                    <li class="nav__item">
+                        <a href="#" class="nav__link active-link">
+                            <i class='bx bx-home-alt-2' ></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+
+                    <li class="nav__item">
+                        {% comment %} <a href="{% url 'core:residence' %}" class="nav__link {% if active_page == 'residence' %}active-link{% endif %}"> {% endcomment %}
+                     <a href="{% url 'core:residence' %}" class="nav__link">
+                            <i class='bx bx-award'></i>
+                            <span>Residences</span>
+                        </a>
+                    </li>
+
+                    <li class="nav__item">
+                        <a href="#" class="nav__link">
+                            <i class='bx bx-building-house' ></i>
+                            <span>My Listing</span>
+                        </a>
+                    </li>
+                   
+                    <li class="nav__item">
+                        <a href="#" class="nav__link">
+                            <i class='bx bx-user-circle'></i>
+                            <span>Profile</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+             <!--theme change button  -->
+             <i class='bx bx-moon change-theme' id="theme-button"></i>
+        </nav>
+</header>
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            <strong>{{ message }}</strong>
+        </div>
+    {% endfor %}
+    <script>
+        $(document).ready(function(){
+            setTimeout(function(){
+                $('.alert').fadeOut('slow');
+            }, 3000); // 3000 milliseconds = 3 seconds
+        });
+    </script>
+{% endif %}
+
+
+
+<!--==================== POPULAR ====================-->
+<section class="popular section" id="popular">
+    <div class="container">
+        <div class="popular__container swiper">
+            <div class="swiper-wrapper">
+                {% for R in R_image %}
+                <div class="popular__card swiper-slide">
+                        <img src="{{ R.images.url }}" alt="" class="popular__img">
+                </div> 
+                
+
+                {% endfor %}       
+            </div>
+            <div class="swiper-button-next">
+                <i class='bx bx-chevron-right'></i>
+            </div>
+            <div class="swiper-button-prev">
+                <i class='bx bx-chevron-left'></i>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<section class="value section" id="value">
+    <div class="value__container container grid">
+
+            <div class="value__content">
+                <div class="residence_data">
+                    <h2 class="residence__title">
+                        {{R.title}}
+                    </h2>
+                    <h3 class="residence__price">
+                        <span1>₹</span1>{{R.price}} <span2>/m</span2> 
+                    </h3>
+                    <span class="old_price">
+                        <del><span1>₹</span1> {{R.old_price}} </del><span class="discount">({{R.get_precentage|floatformat:0}}% OFF)</span>
+                    </span>
+                    <span class="discount">{{R.type}}</span>
+                    <p class="residence__description">
+                        {{R.address}}
+                    </p>
+                </div> 
+                
+                <div class="value__accordion">
+                    <!-- 1 -->
+                    <div class="value__accordion-item">
+                        <header class="value__accordion-header">
+                            <i class='bx bxs-shield-x value__accordion-icon'></i>
+                            <h3 class="value__accordion-title">
+                                residence Policies
+                            </h3>
+                            <div class="value__accordion-arrow">
+                                <i class='bx bxs-down-arrow'></i>
+                            </div>
+                        </header>
+
+                        <div class="value__accordion-content">
+                            <p class="value__accordion-description">
+                              {{R.description|safe}}
+                            </p>
+                        </div>
+                    </div>
+                    <!-- 2 -->
+                    <div class="value__accordion-item">
+                        <header class="value__accordion-header">
+                            <i class='bx bxs-x-square value__accordion-icon'></i>
+                            
+                            <h3 class="value__accordion-title">
+                                Features
+                            </h3>
+                            <div class="value__accordion-arrow">
+                                <i class='bx bxs-down-arrow'></i>
+                            </div>
+                        </header>
+                        <div class="value__accordion-content">
+                            <p class="value__accordion-description">
+                                Simplify the search process by providing intuitive search filters,
+                                making it easy for students to find PG accommodations based on their specific requirements
+                            </p>
+                        </div>
+                    </div>
+                    <!-- 3 -->
+                    <div class="value__accordion-item">
+                        <header class="value__accordion-header">
+                            <i class='bx bxs-bar-chart-square value__accordion-icon' ></i>
+                            <h3 class="value__accordion-title">
+                                Facilities
+                            </h3>
+                            <div class="value__accordion-arrow">
+                                <i class='bx bxs-down-arrow'></i>
+                            </div>
+                        </header>
+                        <div class="value__accordion-content">
+                            <p class="value__accordion-description">
+                                Help students find PG accommodations that offer good value for their investment,
+                                ensuring they receive quality facilities and services within their budget.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- 4 -->
+                    <div class="value__accordion-item">
+                        <header class="value__accordion-header">
+                            <i class='bx bxs-check-square value__accordion-icon' ></i>
+                            <h3 class="value__accordion-title">
+                                description
+                            </h3>
+                            <div class="value__accordion-arrow">
+                                <i class='bx bxs-down-arrow'></i>
+                            </div>
+                        </header>
+                        <div class="value__accordion-content">
+                            <p class="value__accordion-description">
+                                Ensure the authenticity and reliability of PG listings by conducting thorough verification processes, 
+                                giving students peace of mind in their decision-making.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="contact__data">
+                <span class="section__subtitle">Contact Us</span>
+                <h2 class="section__title">
+                    Easy to contact us <span>.</span>
+                </h2>
+                <p class="contact__description">
+                    If there is a problem in finding your perfect home,
+                    just contact us.
+                </p>
+            
+            <div class="contact__card">
+                <!-- 3 -->
+                <div class="contact__card-box">
+                    <div class="contact__card-info">
+                        <i class='bx bxs-phone-call'></i>
+                        <div>
+                            <h3 class="contact__card-title">
+                                Phone 1
+                            </h3>
+                            <p class="contact__card-description">
+                                {{ R.vendor.contact1 }}
+                            </p>
+                        </div>
+                    </div>
+    
+                    <button class="button contact__card-button">
+                        <a href="tel: +91{{ R.vendor.contact1 }}">Call Now</a>  
+                    </button>
+                </div>
+                <!-- 4 -->
+                <div class="contact__card-box">
+                    <div class="contact__card-info">
+                        <i class='bx bxs-phone-call'></i>
+                        <div>
+                            <h3 class="contact__card-title">
+                                Phone 2
+                            </h3>
+                            <p class="contact__card-description">
+                                {{ R.vendor.contact2 }}
+                            </p>
+                        </div>
+                    </div>
+    
+                    <button class="button contact__card-button">
+                        <a href="tel: +91{{ R.vendor.contact2 }}">Call Now</a>  
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        </div>
+</section>
+ 
+
+
+
+
+
+<footer class="footer section">
+    <div class="footer__container container grid">
+        <div>
+            <a href="" class="footer__logo">
+                FYP home <i class='bx bx-home' ></i>
+            </a>
+            <p class="footer description">
+                our vision is to make all student<br>
+                the best place to live
+            </p>
+        </div>
+
+        <div class="footer__content">
+            <!-- 1 -->
+            <div>
+                <h3 class="footer__title">
+                    About
+                </h3>
+
+                <ul class="footer__links">
+                    <li>
+                        <a href="" class="footer_link">About Us</a>
+                    </li>
+                    <li>
+                        <a href="" class="footer_link">Features</a>
+                    </li>
+                    <li>
+                        <a href="" class="footer_link">News & Blogs</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- 2 -->
+            <div>
+                <h3 class="footer__title">
+                    Company
+                </h3>
+
+                <ul class="footer__links">
+                    <li>
+                        <a href="" class="footer_link">How we work?</a>
+                    </li>
+                    <li>
+                        <a href="" class="footer_link">Capital</a>
+                    </li>
+                    <li>
+                        <a href="" class="footer_link">Security</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- 3 -->
+            <div>
+                <h3 class="footer__title">
+                    Support
+                </h3>
+
+                <ul class="footer__links">
+                    <li>
+                        <a href="" class="footer_link">FAQs</a>
+                    </li>
+                    <li>
+                        <a href="" class="footer_link">Support center</a>
+                    </li>
+                    <li>
+                        <a href="" class="footer_link">Contact Us</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- 4 -->
+            <div>
+                <h3 class="footer__title">
+                    Follow Us
+                </h3>
+
+                <ul class="footer__social">
+                    <a href="" class="footer__social-link">
+                       <i class='bx bxl-facebook-circle'></i>
+                    </a>
+                    <a href="" class="footer__social-link">
+                        <i class='bx bxl-instagram-alt'></i>
+                    </a>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer__info container">
+        <span class="footer__copy">
+            &#169; FYP Home. All right reserved
+        </span>
+
+        <div class="footer__privacy">
+            <a href="">Terms & Agreement</a>
+            <a href="">Privacy Policy</a>
+        </div>
+    </div>
+</footer>
+
+
+<!--========== SCROLL UP ==========-->
+ <a href="#" class="scrollup" id="scroll-up">
+    <i class='bx bx-chevrons-up'></i>
+ </a>
+ 
+ 
+ <!--=============== SCROLLREVEAL ===============-->
+ <script src="{% static 'assets/js/scrollreveal.min.js' %}"></script>
+ 
+ <!--=============== SWIPER JS ===============-->
+ <script src="{% static 'assets/js/swiper-bundle.min.js' %}"></script>
+ 
+ <!--=============== MAIN JS ===============-->
+ <script src="{% static 'assets/js/main.js' %}"></script>
+ <script src="{% static 'assets/js/function.js' %}"></script>
+
+</body>
+</html>
