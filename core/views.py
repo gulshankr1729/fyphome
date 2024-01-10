@@ -1,37 +1,44 @@
-from django.shortcuts import render, HttpResponse, get_list_or_404
-from core.models import Residence, Category, Vendor, wishlist, ResidenceImages, ResidenceReviews, Address
+from django.shortcuts import render, get_list_or_404
+from core.models import Residence, Category, Vendor, ResidenceImages
 from django.contrib.auth.decorators import login_required
+from django.template.loader import render_to_string
+from django.http import JsonResponse
+from userauths.models import User
 
 def index(request):
     Residences = Residence.objects.filter(Residence_status="published", featured=True).order_by("-id")
     total_residences = Residence.objects.count()
+    user_count = User.objects.count()
 
     context = {
         "Residences":Residences,
         "total_residences": total_residences,
+        'active_page': 'index',
+        'user_count': user_count,
+
     }
-    return render(request, 'core/index.html',context)
+    return render(request, 'core/index.html',context=context)
 
 
 def residence_view(request):
     Residences = Residence.objects.filter(Residence_status="published").order_by("-id")
     categories = Category.objects.all()
-    # tags = Tag.objects.all().order_by("-id")[:6]
 
     context = {
         "Residences":Residences,
         "categories":categories,
-        # "tags":tags,
+        'active_page': 'residence',
+    
     }
-    return render(request, 'core/residence.html', context)
+    return render(request, 'core/residence.html', context = context)
 
 
 
-@login_required(login_url='../sign-in/')
+
 def search_view(request):
     query = request.GET.get("q")
 
-    Residences = Residence.objects.filter(description__icontains=query).order_by("-date")
+    Residences = Residence.objects.filter(address__icontains=query).order_by("-date")
 
     context = {
         "Residences": Residences,
@@ -52,15 +59,29 @@ def residence_detail_view(request, Rid):
     return render(request, "core/residence_detail.html", context)
 
 
-@login_required
+
 def my_listings_view(request):
     # Filter residences based on the logged-in user
     residence = Residence.objects.filter(user=request.user)
-    return render(request, 'core/my_listing.html')
+    
+    context = {
+        "residence": residence,
+        'active_page': 'my_listing',
+    }
+    return render(request, 'core/my_listing.html', context=context)
 
 def filter_residence(request):
-    Categories = request.GET.getlist("category[]")
+    Categories = request.GET.getlist('category[]')
 
-    residence = Residence.objects.filter(Residence_status="published").order_by("-id").distinct(
-        
-    )
+    residences = Residence.objects.filter(Residence_status="published").order_by("-id").distinct()
+
+    if len(Categories) > 0:
+        residences = residences.filter(Category__id__in=Categories).distinct()
+
+    
+    data = render_to_string("core/async/residence.html", {"Residences": residences})
+    return JsonResponse({"data": data})
+    
+
+def profile_view(request):
+    return render(request, 'core/profile.html')

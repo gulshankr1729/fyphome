@@ -12,7 +12,7 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ['title', 'category_image']
 
 class VendorAdmin(admin.ModelAdmin):
-    list_display = ['title', 'vendor_image']
+    list_display = ['title', 'address']
 
 class ResidenceReviewsAdmin(admin.ModelAdmin):
     list_display = ['user', 'Residence', 'review', 'rating']

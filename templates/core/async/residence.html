@@ -1,0 +1,28 @@
+{% for Residence in Residences %}
+<div class="residence__container">  
+        <article class="residence__card">
+            <a href="{% url 'core:residence_detail' Residence.Rid %}">
+                <img src="{{ Residence.image.url }}" alt="" class="residence__img">
+            </a>
+            <div class="residence__data">
+                <h3 class="residence__title">
+                    {{Residence.title}}
+                </h3>
+                <h2 class="residence__price">
+                    <span1>₹</span1>{{Residence.price}} <span2>/m</span2> 
+                </h2>
+                <span class="old_price">
+                    <del><span1>₹</span1> {{Residence.old_price}} </del><span class="discount">({{Residence.get_precentage|floatformat:0}}% OFF)</span>
+                </span>
+                <span class="old_price">{{Residence.type}} </span>
+                <span class="old_price">{{Residence.category}} </span>
+                <span class="old_price">{{Residence.category}} </span>
+                <span class="old_price">{{Residence.category}} </span>
+                
+                <p class="residence__description">
+                    {{Residence.address|truncatechars:30}}
+                </p>
+            </div> 
+        </article> 
+</div>
+{% endfor %}    

@@ -12,16 +12,16 @@
                   Find <br> Your Perfect <br>Home
               </h1>
               
-              <form action="{% url 'core:search' %}" class="home__search" method="GET">
-                <i class='bx bxs-map'></i>
-                <input type="search"placeholder="search by college/location... " name="q" class="home__search-input">
-                <button class="button" type="submit">search</button>
-              </form>
-            
+              
               <p class="home__drscription">
-                Discover Your Home Away from Home: FYP Home - Simplifying Student PG Accommodation Search
-              </p>
-
+                  Discover Your Home Away from Home: FYP Home - Simplifying Student PG Accommodation Search
+                </p>
+                
+                <form action="{% url 'core:search' %}" class="home__search" method="GET">
+                  <i class='bx bxs-map'></i>
+                  <input type="search"placeholder="search by college/location... " name="q" class="home__search-input">
+                  <button class="button" type="submit">search</button>
+                </form>
 
               <div class="home__value">
                   <div>
@@ -34,18 +34,10 @@
                   </div>
                   <div>
                       <h1 class="home__value-number">
-                          100 <span>+</span>
+                        {{ user_count }}<span>+</span>
                       </h1>
                       <span class="home__value-description">
                       Happy <br> Students
-                      </span>
-                  </div>
-                  <div>
-                      <h1 class="home__value-number">
-                          9k <span>+</span>
-                      </h1>
-                      <span class="home__value-description">
-                      Premium <br> Product
                       </span>
                   </div>
               </div>
@@ -74,6 +66,11 @@
                 <article class="popular__card swiper-slide">
                     <a href="{% url 'core:residence_detail' Residence.Rid %}">
                         <img src="{{ Residence.image.url }}" alt="" class="popular__img">
+                        {% if Residence.in_stock %}
+                        <span class="section__subtitle">Available</span>
+                        {% else %}
+                            <span class="section__subtitle">Not Available!</span>
+                        {% endif %}
                     </a>
                     <div class="popular__data">
                         <h3 class="popular__title">
@@ -87,7 +84,7 @@
                         </span>
                         <span class="old_price">{{Residence.type}} </span>
                         <p class="popular__description">
-                            {{Residence.address}}
+                            {{Residence.address|truncatechars:30}}
                         </p>
                     </div> 
                 </article> 

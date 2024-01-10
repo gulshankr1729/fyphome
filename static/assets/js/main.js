@@ -1,20 +1,6 @@
 
   
 /*=============== CHANGE BACKGROUND HEADER ===============*/
-// function scrollHeader() {
-//     const header = document.getElementById('header');
-    
-//     // Check if the scroll position is greater than or equal to 50 viewport height
-//     if (window.scrollY >= 50) {
-//         header.classList.add('scroll-header');
-//     } else {
-//         // If not, remove the 'scroll-header' class
-//         header.classList.remove('scroll-header');
-//     }
-// }
-
-// window.addEventListener('scroll', scrollHeader);
-
 
 function scrollHeader() {
     const header = document.getElementById('header');
@@ -73,9 +59,6 @@ accordionItems.forEach((item) => {
 function handleScroll() {
     const st = window.scrollY || document.documentElement.scrollTop;
 
-    // Check if the scroll direction has changed
-    const isScrollingDown = st > lastScrollTop;
-
     // Open the next item that comes into view
     accordionItems.forEach((item) => {
         const itemTop = item.getBoundingClientRect().top;
@@ -84,11 +67,6 @@ function handleScroll() {
             openAccordion(item);
         }
     });
-
-    // Close the currently open item when scrolling in the opposite direction
-    if (!isScrollingDown && currentlyOpenItem) {
-        closeAccordion(currentlyOpenItem);
-    }
 
     lastScrollTop = st;
 }
@@ -141,8 +119,6 @@ function toggleAccordion(item) {
 
 /*=============== SCROLL SECTIONS ACTIVE LINK ===============*/
 
-
-// window.addEventListener('scroll', scrollActive);
 document.addEventListener("DOMContentLoaded", function () {
     // Function to update active link
     function updateActiveLink(clickedLink) {

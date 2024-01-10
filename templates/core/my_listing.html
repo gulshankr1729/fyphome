@@ -48,29 +48,28 @@
             <div class="nav__menu">
                 <ul class="nav__list">
                     <li class="nav__item">
-                        <a href="#" class="nav__link active-link">
+                        <a href="{% url 'core:index' %}" class="nav__link {% if active_page == 'index' %}active-link{% endif %}">
                             <i class='bx bx-home-alt-2' ></i>
                             <span>Home</span>
                         </a>
                     </li>
 
                     <li class="nav__item">
-                        {% comment %} <a href="{% url 'core:residence' %}" class="nav__link {% if active_page == 'residence' %}active-link{% endif %}"> {% endcomment %}
-                     <a href="{% url 'core:residence' %}" class="nav__link">
-                            <i class='bx bx-award'></i>
+                            <a href="{% url 'core:residence' %}" class="nav__link {% if active_page == 'residence' %}active-link{% endif %}">
+                                <i class='bx bx-award'></i>
                             <span>Residences</span>
                         </a>
                     </li>
 
                     <li class="nav__item">
-                        <a href="#" class="nav__link">
+                        <a href="{% url 'core:my_listing' %}" class="nav__link {% if active_page == 'my_listing' %}active-link{% endif %}">
                             <i class='bx bx-building-house' ></i>
                             <span>My Listing</span>
                         </a>
                     </li>
                    
                     <li class="nav__item">
-                        <a href="#" class="nav__link">
+                        <a href="{% url 'core:profile' %}" class="nav__link {% if active_page == 'profile' %}active-link{% endif %}">
                             <i class='bx bx-user-circle'></i>
                             <span>Profile</span>
                         </a>

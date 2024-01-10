@@ -42,29 +42,28 @@
             <div class="nav__menu">
                 <ul class="nav__list">
                     <li class="nav__item">
-                        <a href="#" class="nav__link active-link">
+                        <a href="{% url 'core:index' %}" class="nav__link {% if active_page == 'index' %}active-link{% endif %}">                           
                             <i class='bx bx-home-alt-2' ></i>
                             <span>Home</span>
                         </a>
                     </li>
 
                     <li class="nav__item">
-                        {% comment %} <a href="{% url 'core:residence' %}" class="nav__link {% if active_page == 'residence' %}active-link{% endif %}"> {% endcomment %}
-                     <a href="{% url 'core:residence' %}" class="nav__link">
-                            <i class='bx bx-award'></i>
+                            <a href="{% url 'core:residence' %}" class="nav__link {% if active_page == 'residence' %}active-link{% endif %}">
+                                <i class='bx bx-award'></i>
                             <span>Residences</span>
                         </a>
                     </li>
 
                     <li class="nav__item">
-                        <a href="#" class="nav__link">
+                        <a href="{% url 'core:my_listing' %}" class="nav__link {% if active_page == 'my_listing' %}active-link{% endif %}">
                             <i class='bx bx-building-house' ></i>
                             <span>My Listing</span>
                         </a>
                     </li>
                    
                     <li class="nav__item">
-                        <a href="#" class="nav__link">
+                        <a href="{% url 'core:profile' %}" class="nav__link {% if active_page == 'profile' %}active-link{% endif %}">
                             <i class='bx bx-user-circle'></i>
                             <span>Profile</span>
                         </a>
@@ -120,8 +119,9 @@
 
 
 <section class="value section" id="value">
+    
     <div class="value__container container grid">
-
+        {% if R.in_stock %}
             <div class="value__content">
                 <div class="residence_data">
                     <h2 class="residence__title">
@@ -154,7 +154,7 @@
 
                         <div class="value__accordion-content">
                             <p class="value__accordion-description">
-                              {{R.description|safe}}
+                              {{R.policies|safe}}
                             </p>
                         </div>
                     </div>
@@ -172,8 +172,7 @@
                         </header>
                         <div class="value__accordion-content">
                             <p class="value__accordion-description">
-                                Simplify the search process by providing intuitive search filters,
-                                making it easy for students to find PG accommodations based on their specific requirements
+                                {{R.features|safe}}
                             </p>
                         </div>
                     </div>
@@ -190,8 +189,7 @@
                         </header>
                         <div class="value__accordion-content">
                             <p class="value__accordion-description">
-                                Help students find PG accommodations that offer good value for their investment,
-                                ensuring they receive quality facilities and services within their budget.
+                                {{R.facilities|safe}}
                             </p>
                         </div>
                     </div>
@@ -208,25 +206,25 @@
                         </header>
                         <div class="value__accordion-content">
                             <p class="value__accordion-description">
-                                Ensure the authenticity and reliability of PG listings by conducting thorough verification processes, 
-                                giving students peace of mind in their decision-making.
+                                {{R.description|safe}}
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="contact__data">
-                <span class="section__subtitle">Contact Us</span>
-                <h2 class="section__title">
-                    Easy to contact us <span>.</span>
-                </h2>
-                <p class="contact__description">
-                    If there is a problem in finding your perfect home,
-                    just contact us.
-                </p>
             
-            <div class="contact__card">
                 <!-- 3 -->
+                
+                <div class="contact__data">
+                    <span class="section__subtitle">Contact Us</span>
+                    <h2 class="section__title">
+                        Easy to contact <span>.</span>
+                    </h2>
+                    <p class="contact__description">
+                       contact with <u>{{ R.vendor.title }}</u> (Residence ownwer) to book your perfect accomodation.
+                    </p>
+                
+                <div class="contact__card">
                 <div class="contact__card-box">
                     <div class="contact__card-info">
                         <i class='bx bxs-phone-call'></i>
@@ -262,12 +260,17 @@
                         <a href="tel: +91{{ R.vendor.contact2 }}">Call Now</a>  
                     </button>
                 </div>
+
+
             </div>
         </div>
-
+        {% else %}
+        <span class="section__subtitle">Room Not Available!(All Booked)</span>
+        {% endif %}
         </div>
+
 </section>
- 
+
 
 
 

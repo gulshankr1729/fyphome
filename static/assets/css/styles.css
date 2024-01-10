@@ -566,7 +566,7 @@ content: '';
 }
 
 .residence__price{
-  font-size: var(--h3-font-size);
+  font-size: var(--h2-font-size);
   color: var(--text-color);
   margin-bottom: .25rem;
 }
@@ -577,8 +577,8 @@ content: '';
 }
 
 .residence__title{
-  font-size: var(--h2-font-size);
-  margin-bottom: .75rem;
+  font-size: var(--h3-font-size);
+  margin-bottom: .25rem;
   display: flex;
 }
 

@@ -48,29 +48,28 @@
             <div class="nav__menu">
                 <ul class="nav__list">
                     <li class="nav__item">
-                        <a href="#" class="nav__link active-link">
+                        <a href="{% url 'core:index' %}" class="nav__link {% if active_page == 'index' %}active-link{% endif %}">
                             <i class='bx bx-home-alt-2' ></i>
                             <span>Home</span>
                         </a>
                     </li>
 
                     <li class="nav__item">
-                        {% comment %} <a href="{% url 'core:residence' %}" class="nav__link {% if active_page == 'residence' %}active-link{% endif %}"> {% endcomment %}
-                     <a href="{% url 'core:residence' %}" class="nav__link">
+                        <a href="{% url 'core:residence' %}" class="nav__link {% if active_page == 'residence' %}active-link{% endif %}">
                             <i class='bx bx-award'></i>
                             <span>Residences</span>
                         </a>
                     </li>
 
                     <li class="nav__item">
-                        <a href="#" class="nav__link">
+                        <a href="{% url 'core:my_listing' %}" class="nav__link {% if active_page == 'my_listing' %}active-link{% endif %}">
                             <i class='bx bx-building-house' ></i>
                             <span>My Listing</span>
                         </a>
                     </li>
                    
                     <li class="nav__item">
-                        <a href="#" class="nav__link">
+                        <a href="{% url 'core:profile' %}" class="nav__link {% if active_page == 'profile' %}active-link{% endif %}">
                             <i class='bx bx-user-circle'></i>
                             <span>Profile</span>
                         </a>
@@ -127,12 +126,12 @@
               <div class="price-input">
                 <div class="field">
                   <span>Min</span>
-                  <input type="number" class="input-min" value="2500">
+                  <input id="minmum" type="number" class="input-min" value="2500">
                 </div>
                 <div class="separator">-</div>
                 <div class="field">
                   <span>Max</span>
-                  <input type="number" class="input-max" value="7500">
+                  <input id="maximun" type="number" class="input-max" value="7500">
                 </div>
               </div>
               <div class="slider">
@@ -148,7 +147,7 @@
               <div class="customee-checkbox">
                 {% for c in categories %}
                 <div>
-                    <input data-filter="Category" class="form-check-input filter-checkbox" type="checkbox" name="checkbox" id="category{{ c.id }}" value="{{ c.id }}" />
+                    <input data-filter='Category' class="form-check-input filter-checkbox" type="checkbox" name="checkbox" id="category{{ c.id }}" value="{{ c.id }}" />
                     <label class="form-check-label" for="category{{ c.id }}"><span>{{ c.title }}</span> <span>({{ c.category.count }})</span></label>              
                 </div>
                 {% endfor %}
@@ -158,12 +157,17 @@
     
               </div>
         </div>
-    <div class="residence__cont">
+    <div class="residence__cont" id="filtered-residences">
         {% for Residence in Residences %}
         <div class="residence__container">  
                 <article class="residence__card">
                     <a href="{% url 'core:residence_detail' Residence.Rid %}">
                         <img src="{{ Residence.image.url }}" alt="" class="residence__img">
+                        {% if Residence.in_stock %}
+                        <span class="section__subtitle">Available</span>
+                        {% else %}
+                            <span class="section__subtitle">Not Available!</span>
+                        {% endif %}
                     </a>
                     <div class="residence__data">
                         <h3 class="residence__title">
@@ -190,25 +194,24 @@
 
 
 <script>
-
-
-
 //   ===========================================PRICE FILTER=========================================
+// Assuming these are your constants
 const rangeInput = document.querySelectorAll(".range-input input"),
-priceInput = document.querySelectorAll(".price-input input"),
-range = document.querySelector(".slider .progress");
-let priceGap = 1000;
+      priceInput = document.querySelectorAll(".price-input input"),
+      range = document.getElementById("priceSlider"); 
+      let priceGap = 1000;
 
-priceInput.forEach(input =>{
-    input.addEventListener("input", e =>{
+// Event listeners for price input changes
+priceInput.forEach(input => {
+    input.addEventListener("input", e => {
         let minPrice = parseInt(priceInput[0].value),
-        maxPrice = parseInt(priceInput[1].value);
-        
-        if((maxPrice - minPrice >= priceGap) && maxPrice <= rangeInput[1].max){
-            if(e.target.className === "input-min"){
+            maxPrice = parseInt(priceInput[1].value);
+
+        if ((maxPrice - minPrice >= priceGap) && maxPrice <= rangeInput[1].max) {
+            if (e.target.className === "input-min") {
                 rangeInput[0].value = minPrice;
                 range.style.left = ((minPrice / rangeInput[0].max) * 100) + "%";
-            }else{
+            } else {
                 rangeInput[1].value = maxPrice;
                 range.style.right = 100 - (maxPrice / rangeInput[1].max) * 100 + "%";
             }
@@ -216,25 +219,33 @@ priceInput.forEach(input =>{
     });
 });
 
-rangeInput.forEach(input =>{
-    input.addEventListener("input", e =>{
+// Event listeners for range input changes
+rangeInput.forEach(input => {
+    input.addEventListener("input", e => {
         let minVal = parseInt(rangeInput[0].value),
-        maxVal = parseInt(rangeInput[1].value);
+            maxVal = parseInt(rangeInput[1].value);
 
-        if((maxVal - minVal) < priceGap){
-            if(e.target.className === "range-min"){
-                rangeInput[0].value = maxVal - priceGap
-            }else{
+        if ((maxVal - minVal) < priceGap) {
+            if (e.target.className === "range-min") {
+                rangeInput[0].value = maxVal - priceGap;
+            } else {
                 rangeInput[1].value = minVal + priceGap;
             }
-        }else{
+        } else {
             priceInput[0].value = minVal;
             priceInput[1].value = maxVal;
-            range.style.left = ((minVal / rangeInput[0].max) * 100) + "%";
-            range.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
+
+            // Check if 'range' exists before accessing its style property
+            if (range) {
+                range.style.left = ((minVal / rangeInput[0].max) * 100) + "%";
+                range.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
+            } else {
+                console.error("Element with class 'slider progress' not found.");
+            }
         }
     });
 });
+
 //   ===========================================MENU=========================================
 function toggleMenuIcons() {
     var menuIcon = document.getElementById("menu-icon");
@@ -271,10 +282,6 @@ function toggleMenuIcons() {
       
       window.addEventListener('scroll', toggleMenuVisibility);
     });
-
-
-
-
     </script>
 
 

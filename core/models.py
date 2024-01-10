@@ -46,14 +46,9 @@ class Vendor(models.Model):
     vid = ShortUUIDField(unique=True, length=10, max_length=20,
                          prefix="ven", alphabet="abcdefgh12345")
     title = models.CharField(max_length=100, default="Fyp Home")
-    image = models.ImageField(
-        upload_to=user_directory_path, default="vendor.jpg")
-    description = models.TextField(null=True, blank=True)
     address = models.CharField(max_length=100, default="123 Main Street.")
     contact1 = models.CharField(max_length=100, default="+123 (456) 789")
     contact2 = models.CharField(max_length=100, default="+123 (456) 789")
-    chat_resp_time = models.CharField(max_length=100, default="100")
-    authentic_rating = models.CharField(max_length=100, default="100")
 
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
@@ -61,8 +56,6 @@ class Vendor(models.Model):
     class Meta:
         verbose_name_plural = "Vendors"
 
-    def vendor_image(self):
-        return mark_safe('<img src="%s" width="50" height="50" />' % (self.image.url))
 
     def __str__(self):
         return self.title
@@ -80,13 +73,16 @@ class Residence(models.Model):
     image = models.ImageField(
         upload_to=user_directory_path, default="Residence.jpg")
     description = RichTextUploadingField(null=True, blank=True, default="This is the Redidence")
+    policies = RichTextUploadingField(null=True, blank=True, default="This is the Redidence")
+    features = RichTextUploadingField(null=True, blank=True, default="This is the Redidence")
+    facilities = RichTextUploadingField(null=True, blank=True, default="This is the Redidence")
 
     price = models.DecimalField(
         max_digits=99999999999999, decimal_places=2, default="000")
     old_price = models.DecimalField(
         max_digits=99999999999999, decimal_places=2, default="000")
     address = models.CharField(max_length=100, default="123 Main Street.")
-    specifications = models.TextField(null=True, blank=True)
+    # specifications = models.TextField(null=True, blank=True)
     # tags = models.ForeignKey(Tags, on_delete=models.SET_NULL, null=True)
     type = models.CharField(
         max_length=100, default="Not couple friendly", null=True, blank=True)
