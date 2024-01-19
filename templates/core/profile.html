@@ -102,7 +102,7 @@
             <div class="value__content">
 
                 {{user.username}}
-
+             <div>
                 {% if request.user.is_authenticated %}
                 <a href="{% url 'userauths:sign-out' %}" class="button register__button">
                     Sign Out
@@ -112,7 +112,7 @@
                     Sign Up
                 </a>
                 {% endif %}
-
+            </div>
             </div>
 </section>
 
