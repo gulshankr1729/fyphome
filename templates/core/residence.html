@@ -1,3 +1,4 @@
+<!--2 -->
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -126,20 +127,20 @@
               <div class="price-input">
                 <div class="field">
                   <span>Min</span>
-                  <input id="minmum" type="number" class="input-min" value="2500">
+                  <input data-filter="minimum" id="minmum" type="number" class="input-min" value="2500">
                 </div>
                 <div class="separator">-</div>
                 <div class="field">
                   <span>Max</span>
-                  <input id="maximun" type="number" class="input-max" value="7500">
+                  <input data-filter="maximum" id="maximun" type="number" class="input-max" value="7500">
                 </div>
               </div>
               <div class="slider">
                 <div id="priceSlider"></div>
               </div>
               <div class="range-input">
-                <input type="range" class="range-min" min="0" max="10000" value="2500" step="100">
-                <input type="range" class="range-max" min="0" max="10000" value="7500" step="100">
+                <input data-filter="minimum" type="range" class="range-min" min="0" max="10000" value="2500" step="100">
+                <input data-filter="maximum" type="range" class="range-max" min="0" max="10000" value="7500" step="100">
               </div>
               <header>
                 <h2><ins>Category:</ins></h2>
