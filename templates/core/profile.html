@@ -102,6 +102,7 @@
             <div class="value__content">
 
                 {{user.username}}
+                {{user.email}}
              <div>
                 {% if request.user.is_authenticated %}
                 <a href="{% url 'userauths:sign-out' %}" class="button register__button">
