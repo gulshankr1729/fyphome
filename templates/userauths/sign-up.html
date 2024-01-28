@@ -27,21 +27,19 @@
                 </div><br>
                 <form method="post" method="POST">
                     {% csrf_token %}
-                    <div class="form-group">
+                    <div class="home__search">
                         {{form.username}}
                     </div>
-                    <div class="form-group">
+                    <div class="home__search">
                         {{form.email}}
                     </div>
-                    <div class="form-group">
+                    <div class="home__search">
                         {{form.password1}}
                     </div>
-                    <div class="form-group">
+                    <div class="home__search">
                         {{form.password2}}
                     </div><br>
-                    <div class="form-group">
                         <button type="submit" class="button register__button"  name="login">Register</button>
-                    </div>
                 </form>
             </div>
         </div>

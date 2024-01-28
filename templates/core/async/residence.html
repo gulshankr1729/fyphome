@@ -3,6 +3,11 @@
         <article class="residence__card">
             <a href="{% url 'core:residence_detail' Residence.Rid %}">
                 <img src="{{ Residence.image.url }}" alt="" class="residence__img">
+                {% if Residence.in_stock %}
+                <span class="section__subtitle">Available</span>
+                {% else %}
+                    <span class="section__subtitle">Not Available!</span>
+                {% endif %}
             </a>
             <div class="residence__data">
                 <h3 class="residence__title">

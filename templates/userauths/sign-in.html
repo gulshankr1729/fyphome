@@ -20,11 +20,11 @@
                 <form method="POST"> 
                     {% csrf_token %}
 
-                    <div class="form-group">
-                        <input type="text" required name="email" placeholder="Email *" />
+                    <div class="home__search">
+                        <input type="text" required name="email" placeholder="Email *" class="home__search-input"/>
                     </div>
-                    <div class="form-group">
-                        <input required type="password" name="password" placeholder="Your password *" />
+                    <div class="home__search">
+                        <input required type="password" name="password" placeholder="Your password *" class="home__search-input"/>
                     </div>
                     <!-- <div class="login_footer form-group">
                         <div class="chek-form">
