@@ -1,4 +1,3 @@
-#2
 from django.shortcuts import render, get_list_or_404
 from core.models import Residence, Category, Vendor, ResidenceImages
 from django.contrib.auth.decorators import login_required
