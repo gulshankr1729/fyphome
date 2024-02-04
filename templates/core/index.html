@@ -97,6 +97,15 @@
             <div class="swiper-button-prev">
                 <i class='bx bx-chevron-left'></i>
             </div>
+
+            <!-- {% if Residences|length > 1 %}
+            <div class="swiper-button-next">
+                <i class='bx bx-chevron-right'></i>
+            </div>
+            <div class="swiper-button-prev">
+                <i class='bx bx-chevron-left'></i>
+            </div>
+            {% endif %} -->
         </div>
     </div>
 </section>
@@ -325,6 +334,26 @@
             </button>
     </div>
 </section>
+
+<!-- Swiper POPULAR-->
+<!-- Initialize Swiper -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var swiper = new Swiper('.popular__container', {
+            slidesPerView: 3,
+            spaceBetween: 20, // Adjust the space between slides as needed
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            loop: true, // Enable continuous loop
+            autoplay: {
+                delay: 2000, // Set the delay between slides
+                disableOnInteraction: false, // Allow autoplay to continue after manual interaction
+            },
+        });
+    });
+</script>
 
 </main>
 
