@@ -1,4 +1,3 @@
-//2
 $(document).ready(function () {
     const filter_object = {};
 
