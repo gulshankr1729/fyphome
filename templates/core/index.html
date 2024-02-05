@@ -337,23 +337,55 @@
 
 <!-- Swiper POPULAR-->
 <!-- Initialize Swiper -->
+<!-- Swiper POPULAR-->
+<!-- Initialize Swiper -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var swiper = new Swiper('.popular__container', {
+            // Initial configuration
             slidesPerView: 3,
-            spaceBetween: 20, // Adjust the space between slides as needed
+            spaceBetween: 20,
             navigation: {
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',
             },
-            loop: true, // Enable continuous loop
+            loop: true,
             autoplay: {
-                delay: 2000, // Set the delay between slides
-                disableOnInteraction: false, // Allow autoplay to continue after manual interaction
+                delay: 2000,
+                disableOnInteraction: false,
+            },
+            // Responsive breakpoints
+            breakpoints: {
+                // when window width is <= 320px 
+                156: {
+                    slidesPerView: 1,
+                },
+                // when window width is <= 360px 
+                360: {
+                    slidesPerView: 1,
+                },
+                // when window width is <= 600px 
+                600: {
+                    slidesPerView: 2,
+                },
+                // when window width is <= 768px 
+                768: {
+                    slidesPerView: 2,
+                },
+                // when window width is <= 1024px 
+                1024: {
+                    slidesPerView: 2,
+                },
+                // when window width is <= 1366px 
+                1366: {
+                    slidesPerView: 3,
+                },
+                // Add more breakpoints as needed
             },
         });
     });
 </script>
+
 
 </main>
 
