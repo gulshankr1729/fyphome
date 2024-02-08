@@ -23,7 +23,7 @@
                 {% endif %}
 
 
-                    <a class="section__subtitle" href="{% url 'userauths:sign-in' %}" >Allready have account!</a>
+                    <a class="text-muted" href="{% url 'userauths:sign-in' %}" >Allready have account!</a>
                 </div><br>
                 <form method="post" method="POST">
                     {% csrf_token %}
