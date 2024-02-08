@@ -15,7 +15,7 @@
                     <h2 class="section__title">
                         Sign-In
                     </h2>
-                    <a class="section__subtitle" href="{% url 'userauths:sign-up' %}" >Don't have an account?</a>
+                    <a class="text-muted" href="{% url 'userauths:sign-up' %}" >Don't have an account?</a>
                 </div><br>
                 <form method="POST"> 
                     {% csrf_token %}
